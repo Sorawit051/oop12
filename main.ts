@@ -1,18 +1,26 @@
-import { StudentDAO } from "./StudentDAO";
+import { OrderDAO } from "./OrderDAO";
+import { ProductDAO } from "./ProductDAO";
 
-const studentDAO = new StudentDAO();
+const productDAO = new ProductDAO();
 
-studentDAO.insert("684245051", "John Doe", 3.5);
-studentDAO.insert("684245052", "John Smith", 3.8);
-studentDAO.insert("684245053", "Jane Doe", 3.5);
-studentDAO.insert("684245054", "Jane Smith", 3.8);
+productDAO.addProduct("Laptop", 1000, 10);
+productDAO.addProduct("Mouse", 25, 50);
+productDAO.addProduct("Keyboard", 75, 25);
 
-const students = studentDAO.findAll();
-let honor : string;
-students.forEach(student => {
-    console.log(student.getInfo());
-    if(student.isHonors()){
-        console.log(`${student.getFullName()} เกียรตินิยม.`);
-    } else honor = "";
-    console.log(`${student.getid()} ${student.getFullName()} ${student.getGPA()}`);
+const products = productDAO.findAll();
+products.forEach(product => {
+    console.log(product.getInfo());
 });
+
+console.log("=====================================");
+
+const product = productDAO.findProductById(2);
+console.log(product?.getInfo());
+
+console.log("=====================================");
+
+if(product){
+    const orderDAO = new OrderDAO();
+    orderDAO.createOrder(product.getId(), 5);
+}
+
